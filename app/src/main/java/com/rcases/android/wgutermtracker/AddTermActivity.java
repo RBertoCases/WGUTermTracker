@@ -80,14 +80,15 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_TERM_ID)) {
             if (mTermId == DEFAULT_TERM_ID) {
-                mTermId = intent.getIntExtra(EXTRA_TERM_ID, DEFAULT_TERM_ID);
-                Log.d(TAG, "Outgoing EXTRA_TERM_ID = " + mTermId);
+                //TODO Is DEFAULT_TERM_ID the right variable here? Should it be mTermId?
+                mTermId = intent.getIntExtra(EXTRA_TERM_ID, DEFAULT_TERM_ID); 
+                Log.d(TAG, "mTermId = " + mTermId + " EXTRA_TERM_ID = " EXTRA_TERM_ID + 
+                      ", DEFAULT_TERM_ID = " + DEFAULT_TERM_ID);
                 final LiveData<Term> term = mDb.termDao().loadTermById(mTermId);
                 term.observe(this, new Observer<Term>() {
                     @Override
                     public void onChanged(@Nullable Term termItem) {
                         term.removeObserver(this);
-                        Log.d(TAG, "Receiving database update from LiveData");
                         populateUI(termItem);
                     }
                 });
@@ -150,9 +151,15 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         if (v == mCourseButton) {
+            //TODO Does this if statment work? or should I put an if statement on the resulting list's FAB?
+            if (mTermId == DEFAULT_TERM_ID) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Please save the Term before adding Courses.", Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
             Intent intent = new Intent(AddTermActivity.this, ListCourseActivity.class);
             intent.putExtra(EXTRA_TERM_ID, mTermId);
             startActivity(intent);
+            }
         }
 
     }

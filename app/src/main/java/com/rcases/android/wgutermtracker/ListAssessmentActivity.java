@@ -106,16 +106,13 @@ public class ListAssessmentActivity extends AppCompatActivity implements Assessm
 
                                     }
                                 });
-                                Log.d(TAG, "Deleted Assessment");
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "Cancelling course deletion");
                                 mDb = AppDatabase.getsInstance(getApplicationContext());
                                 retrieveAssessments();
-                                Log.d(TAG, "retrieveAsssessment()");
                             }
                         })
                         .show();
@@ -136,7 +133,6 @@ public class ListAssessmentActivity extends AppCompatActivity implements Assessm
     }
 
     private void retrieveAssessments() {
-        Log.d(TAG, "Actively retrieving assessments from the Database");
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_COURSE_ID)) {
             if (mCourseId == DEFAULT_COURSE_ID) {
@@ -145,7 +141,6 @@ public class ListAssessmentActivity extends AppCompatActivity implements Assessm
                 assessments.observe(this, new Observer<List<Assessment>>() {
                     @Override
                     public void onChanged(@Nullable List<Assessment> assessmentItems) {
-                        Log.d(TAG, "Receiving database update from LiveData");
                         mAdapter.setAssessments(assessmentItems);
                     }
                 });
@@ -155,7 +150,6 @@ public class ListAssessmentActivity extends AppCompatActivity implements Assessm
             assessments.observe(this, new Observer<List<Assessment>>() {
                 @Override
                 public void onChanged(@Nullable List<Assessment> assessmentItems) {
-                    Log.d(TAG, "Receiving database update from LiveData");
                     mAdapter.setAssessments(assessmentItems);
                 }
             });

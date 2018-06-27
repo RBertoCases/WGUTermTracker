@@ -106,23 +106,21 @@ public class ListCourseActivity extends AppCompatActivity implements CourseAdapt
 
                                     }
                                 });
-                                Log.d(TAG, "Deleted Course");
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "Cancelling course deletion");
+                                //TODO move to mDb = AppDatabase.getsInstance(getApplicationContext()); to retrieveCourses() method?
                                 mDb = AppDatabase.getsInstance(getApplicationContext());
                                 retrieveCourses();
-                                Log.d(TAG, "retrieveCourses()");
                             }
                         })
                         .show();
 
             }
         }).attachToRecyclerView(mRecyclerView);
-
+        //TODO move to mDb = AppDatabase.getsInstance(getApplicationContext()); to retrieveCourses() method?
         mDb = AppDatabase.getsInstance(getApplicationContext());
         retrieveCourses();
 
@@ -137,17 +135,14 @@ public class ListCourseActivity extends AppCompatActivity implements CourseAdapt
     }
 
     private void retrieveCourses() {
-        Log.d(TAG, "Actively retrieving courses from the Database");
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_TERM_ID)) {
             if (mTermId == DEFAULT_TERM_ID) {
                 mTermId = intent.getIntExtra(EXTRA_TERM_ID, DEFAULT_TERM_ID);
-                Log.d(TAG, "retrieveCourses EXTRA TERM ID = " + mTermId);
                 final LiveData<List<Course>> courses = mDb.courseDao().findCoursesForTerm(mTermId);
                 courses.observe(this, new Observer<List<Course>>() {
                     @Override
                     public void onChanged(@Nullable List<Course> courseItems) {
-                        Log.d(TAG, "Receiving database update from LiveData");
                         mAdapter.setCourses(courseItems);
                     }
                 });
@@ -157,7 +152,6 @@ public class ListCourseActivity extends AppCompatActivity implements CourseAdapt
             courses.observe(this, new Observer<List<Course>>() {
                 @Override
                 public void onChanged(@Nullable List<Course> courseItems) {
-                    Log.d(TAG, "Receiving database update from LiveData");
                     mAdapter.setCourses(courseItems);
                 }
             });
@@ -194,8 +188,6 @@ public class ListCourseActivity extends AppCompatActivity implements CourseAdapt
         Intent intent = new Intent(ListCourseActivity.this, AddCourseActivity.class);
         intent.putExtra(AddCourseActivity.EXTRA_COURSE_ID, itemId);
         intent.putExtra(EXTRA_TERM_ID, mTermId);
-        Log.d(TAG, "Outgoing EXTRA_COURSE_ID = " + itemId);
-        Log.d(TAG, "Outgoing EXTRA_TERM_ID = " + itemId);
         startActivity(intent);
     }
 

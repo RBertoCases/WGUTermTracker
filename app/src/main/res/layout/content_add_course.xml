@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewCourseTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <EditText
+            android:id="@+id/editTextCourseTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Course Title"
+            android:inputType="text|textPersonName" />
+
+        <TextView
+            android:id="@+id/textViewCourseStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Date"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="71dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextCourseStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="MM/dd/yyyy"
+                android:inputType="date" />
+
+            <ImageButton
+                android:id="@+id/buttonCourseStart"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@color/wguBlue"
+                app:srcCompat="@drawable/ic_date_range_white_24dp"
+                tools:ignore="VectorDrawableCompat" />
+
+            <Switch
+                android:id="@+id/switchCourseStartAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hapticFeedbackEnabled="true"
+                android:padding="10dp"
+                android:text="Alert" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewCourseEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="End Date"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="117dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextCourseEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="MM/dd/yyyy"
+                android:inputType="date" />
+
+            <ImageButton
+                android:id="@+id/buttonCourseEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@color/wguBlue"
+                app:srcCompat="@drawable/ic_date_range_white_24dp"
+                tools:ignore="VectorDrawableCompat" />
+
+            <Switch
+                android:id="@+id/switchCourseEndAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hapticFeedbackEnabled="true"
+                android:padding="10dp"
+                android:text="Alert" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Status" />
+
+        <EditText
+            android:id="@+id/editTextStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="in-progress, completed, dropped, plan to take, etc."
+            android:inputType="textShortMessage"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/textVievNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Course Notes" />
+
+        <EditText
+            android:id="@+id/editTextNotes"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:ems="10"
+            android:gravity="top|left"
+            android:hint="Notes"
+            android:inputType="textMultiLine"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:singleLine="false" />
+
+        <TextView
+            android:id="@+id/textViewCourseMentor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Course Mentor" />
+
+        <EditText
+            android:id="@+id/editCourseMentor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textViewPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone" />
+
+        <EditText
+            android:id="@+id/editTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="555-555-5555"
+            android:inputType="phone" />
+
+        <TextView
+            android:id="@+id/textViewEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="E-mail"
+            tools:text="E-mail" />
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="JaneDoe@abc.com"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/textViewAssessmentList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Assessments" />
+
+        <Button
+            android:id="@+id/buttonAssessments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/wguBlue"
+            android:text="Assessments"
+            android:textColor="@android:color/primary_text_dark" />
+
+    </LinearLayout>
+
+</ScrollView>

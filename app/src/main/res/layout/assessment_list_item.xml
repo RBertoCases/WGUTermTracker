@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><!-- This linear layout contains a single item displayed in the MainActivity -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    tools:context=".ListAssessmentActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- TextView that displays the description -->
+
+        <TextView
+            android:id="@+id/assessmentTitle"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/primary_text_light"
+            tools:text="Description" />
+
+        <!-- TextView that displays the goal date -->
+        <TextView
+            android:id="@+id/assessmentGoalDate"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/primary_text_light"
+            tools:text="11/11/1111" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewAssessmentType"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/assessment_circle"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@android:color/primary_text_dark"
+        android:textSize="18sp"
+        tools:text="P" />
+
+</LinearLayout>
+
+

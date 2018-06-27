@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4486a1</color>
+    <color name="colorPrimaryDark">#333</color>
+    <color name="colorAccent">#a7aeba</color>
+    <color name="wguBlue">#4486a1</color>
+    <color name="wguGreen">#558f45</color>
+
+
+</resources>

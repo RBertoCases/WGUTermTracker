@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">WGUTermTracker</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_list_term">Terms List</string>
+    <string name="title_activity_add_term">Add/Modify Term</string>
+    <string name="terms_list_button_text">All Terms</string>
+    <string name="course_list_button_text">All Courses</string>
+    <string name="assessment_list_button_text">All Assessments</string>
+    <string name="title_activity_list_course">Course List</string>
+    <string name="title_activity_list_assessment">Assessment List</string>
+    <string name="title_activity_add_course_acvity">Add/Modify Course</string>
+    <string name="title_activity_add_assessment">Add/Modify Assessment</string>
+</resources>

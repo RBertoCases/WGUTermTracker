@@ -94,7 +94,6 @@ public class AddAssessmentActivity extends AppCompatActivity implements View.OnC
                     public void onChanged(@Nullable Assessment assessmentItem) {
                         mCourseId = assessment.getValue().getCourseId();
                         assessment.removeObserver(this);
-                        Log.d(TAG, "Receiving database update from LiveData");
                         populateUI(assessmentItem);
                     }
                 });
@@ -165,7 +164,6 @@ public class AddAssessmentActivity extends AppCompatActivity implements View.OnC
 
         try {
             goalDate = dateFormat.parse(goal);
-            Log.d(TAG, "dateFormat.parse(goal) = " + goalDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -203,30 +201,23 @@ public class AddAssessmentActivity extends AppCompatActivity implements View.OnC
 
     private void enableAlert() {
         long now = DateUtil.todayLong();
-        Log.d(TAG, "now = " + String.valueOf(now));
         String title = "Assessment: " + mTitle.getText().toString();
         String body = "Your " + getTypeNameFromViews() + " assessment is today!";
         String body3 = "Your " + getTypeNameFromViews() + " assessment is within 3 days!";
         String body21 = "Your " + getTypeNameFromViews() + " assessment is within 3 weeks!";
         String goal = mGoalDate.getText().toString();
-        Log.d(TAG, "String Goal = " + goal);
-//        AlertReceiver.scheduleAssessmentAlarm(getApplicationContext(), mAssessmentId,
-//                System.currentTimeMillis() + 1000, title, body);
-        Log.d(TAG, "System.currentTimeMillis() + 1000 = " + System.currentTimeMillis() + 1000);
+
         if (now <= DateUtil.getDateTimestamp(goal)) {
             AlertReceiver.scheduleAssessmentAlarm(getApplicationContext(),
                     mAssessmentId, DateUtil.getDateTimestamp(goal), title, body);
-            Log.d(TAG, "DateUtil.getDateTimestamp(goal) = " + DateUtil.getDateTimestamp(goal));
         }
         if (now <= DateUtil.getDateTimestamp(goal) - 3 * 24 * 60 * 60 * 1000) {
             AlertReceiver.scheduleAssessmentAlarm(getApplicationContext(), mAssessmentId,
                     DateUtil.getDateTimestamp(goal) - 3 * 24 * 60 * 60 * 1000, title, body3);
-            Log.d(TAG, "DateUtil.getDateTimestamp(goal)3 = " + DateUtil.getDateTimestamp(goal));
         }
         if (now <= DateUtil.getDateTimestamp(goal) - 21 * 24 * 60 * 60 * 1000) {
             AlertReceiver.scheduleAssessmentAlarm(getApplicationContext(), mAssessmentId,
                     DateUtil.getDateTimestamp(goal) - 21 * 24 * 60 * 60 * 1000, title, body21);
-            Log.d(TAG, "DateUtil.getDateTimestamp(goal)21 = " + DateUtil.getDateTimestamp(goal));
         }
 
     }

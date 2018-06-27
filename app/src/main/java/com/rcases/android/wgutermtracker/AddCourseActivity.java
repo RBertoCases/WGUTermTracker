@@ -100,22 +100,18 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
 
         if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_COURSE_ID)) {
             mCourseId = savedInstanceState.getInt(INSTANCE_COURSE_ID, DEFAULT_COURSE_ID);
-            Log.d(TAG, "Incoming INSTANCE_COURSE_ID = " + mCourseId);
         }
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_COURSE_ID)) {
             if (mCourseId == DEFAULT_COURSE_ID) {
                 mCourseId = intent.getIntExtra(EXTRA_COURSE_ID, DEFAULT_COURSE_ID);
-                Log.d(TAG, "Incoming EXTRA_COURSE_ID = " + mCourseId);
                 final LiveData<Course> course = mDb.courseDao().loadCourseById(mCourseId);
                 course.observe(this, new Observer<Course>() {
                     @Override
                     public void onChanged(@Nullable Course courseItem) {
                         mTermId = course.getValue().getTermId();
-                        Log.d(TAG, "mTermId as set by livedata = " + mTermId);
                         course.removeObserver(this);
-                        Log.d(TAG, "Receiving database update from LiveData");
                         populateUI(courseItem);
                     }
                 });
@@ -125,7 +121,6 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
         if (intent != null && intent.hasExtra(EXTRA_TERM_ID)) {
             if (mTermId == DEFAULT_TERM_ID) {
                 mTermId = intent.getIntExtra(EXTRA_TERM_ID, DEFAULT_TERM_ID);
-                Log.d(TAG, "Incoming EXTRA_TERM_ID = " + mTermId);
             }
         }
 
@@ -234,7 +229,6 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
             e.printStackTrace();
         }
 
-        Log.d(TAG, "saved mTermId = " + mTermId);
         final Course course = new Course(title, startDate, endDate, status, note, name, phone, email, mTermId);
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -271,59 +265,45 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
 
     private void enableStartAlert() {
         long now = DateUtil.todayLong();
-        Log.d(TAG, "now = " + String.valueOf(now));
         String title = "Course: " + mTitle.getText().toString();
         String body = "Your " + mTitle.getText().toString() + " course begins today!";
         String body3 = "Your " + mTitle.getText().toString() + " course starts within 3 days!";
         String body21 = "Your " + mTitle.getText().toString() + " course starts within 3 weeks!";
         String date = mStartDate.getText().toString();
-        Log.d(TAG, "String startDate = " + date);
-//        AlertReceiver.scheduleAssessmentAlarm(getApplicationContext(), mAssessmentId,
-//                System.currentTimeMillis() + 1000, title, body);
-        Log.d(TAG, "System.currentTimeMillis() + 1000 = " + System.currentTimeMillis() + 1000);
+
         if (now <= DateUtil.getDateTimestamp(date)) {
             AlertReceiver.scheduleCourseStartAlarm(getApplicationContext(),
                     mCourseId, DateUtil.getDateTimestamp(date), title, body);
-            Log.d(TAG, "DateUtil.getDateTimestamp(startDate) = " + DateUtil.getDateTimestamp(date));
         }
         if (now <= DateUtil.getDateTimestamp(date) - 3 * 24 * 60 * 60 * 1000) {
             AlertReceiver.scheduleCourseStartAlarm(getApplicationContext(), mCourseId,
                     DateUtil.getDateTimestamp(date) - 3 * 24 * 60 * 60 * 1000, title, body3);
-            Log.d(TAG, "DateUtil.getDateTimestamp(startDate)3 = " + DateUtil.getDateTimestamp(date));
         }
         if (now <= DateUtil.getDateTimestamp(date) - 21 * 24 * 60 * 60 * 1000) {
             AlertReceiver.scheduleCourseStartAlarm(getApplicationContext(), mCourseId,
                     DateUtil.getDateTimestamp(date) - 21 * 24 * 60 * 60 * 1000, title, body21);
-            Log.d(TAG, "DateUtil.getDateTimestamp(StartDate)21 = " + DateUtil.getDateTimestamp(date));
         }
     }
 
     private void enableEndAlert() {
         long now = DateUtil.todayLong();
-        Log.d(TAG, "now = " + String.valueOf(now));
         String title = "Course: " + mTitle.getText().toString();
         String body = "Your " + mTitle.getText().toString() + " course ends today!";
         String body3 = "Your " + mTitle.getText().toString() + " course ends within 3 days!";
         String body21 = "Your " + mTitle.getText().toString() + " course ends within 3 weeks!";
         String date = mEndDate.getText().toString();
-        Log.d(TAG, "String endDate = " + date);
-//        AlertReceiver.scheduleAssessmentAlarm(getApplicationContext(), mAssessmentId,
-//                System.currentTimeMillis() + 1000, title, body);
-        Log.d(TAG, "System.currentTimeMillis() + 1000 = " + System.currentTimeMillis() + 1000);
+
         if (now <= DateUtil.getDateTimestamp(date)) {
             AlertReceiver.scheduleCourseEndAlarm(getApplicationContext(),
                     mCourseId, DateUtil.getDateTimestamp(date), title, body);
-            Log.d(TAG, "DateUtil.getDateTimestamp(endDate) = " + DateUtil.getDateTimestamp(date));
         }
         if (now <= DateUtil.getDateTimestamp(date) - 3 * 24 * 60 * 60 * 1000) {
             AlertReceiver.scheduleCourseEndAlarm(getApplicationContext(), mCourseId,
                     DateUtil.getDateTimestamp(date) - 3 * 24 * 60 * 60 * 1000, title, body3);
-            Log.d(TAG, "DateUtil.getDateTimestamp(endDate)3 = " + DateUtil.getDateTimestamp(date));
         }
         if (now <= DateUtil.getDateTimestamp(date) - 21 * 24 * 60 * 60 * 1000) {
             AlertReceiver.scheduleCourseEndAlarm(getApplicationContext(), mCourseId,
                     DateUtil.getDateTimestamp(date) - 21 * 24 * 60 * 60 * 1000, title, body21);
-            Log.d(TAG, "DateUtil.getDateTimestamp(endDate)21 = " + DateUtil.getDateTimestamp(date));
         }
     }
 

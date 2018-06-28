@@ -203,9 +203,14 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
         }
 
         if (v == mAssessmentsButton) {
-            Intent intent = new Intent(AddCourseActivity.this, ListAssessmentActivity.class);
-            intent.putExtra(EXTRA_COURSE_ID, mCourseId);
-            startActivity(intent);
+            if (mCourseId == DEFAULT_COURSE_ID) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Please save the Course before adding Assessments.", Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                Intent intent = new Intent(AddCourseActivity.this, ListAssessmentActivity.class);
+                intent.putExtra(EXTRA_COURSE_ID, mCourseId);
+                startActivity(intent);
+            }
         }
 
     }

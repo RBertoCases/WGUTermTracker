@@ -161,11 +161,12 @@ public class AddAssessmentActivity extends AppCompatActivity implements View.OnC
         String goal = mGoalDate.getText().toString();
         Date goalDate = null;
 
-
         try {
             goalDate = dateFormat.parse(goal);
         } catch (ParseException e) {
             e.printStackTrace();
+            Toast.makeText(this, "Please enter a valid date", Toast.LENGTH_LONG).show();
+            return;
         }
 
         final Assessment assessment = new Assessment(title, type, goalDate, mCourseId);
@@ -184,7 +185,7 @@ public class AddAssessmentActivity extends AppCompatActivity implements View.OnC
                 finish();
             }
         });
-
+        Toast.makeText(this, "Assessment Saved", Toast.LENGTH_LONG).show();
     }
 
     private void saveAssessmentAlert() {
@@ -283,7 +284,6 @@ public class AddAssessmentActivity extends AppCompatActivity implements View.OnC
 
         if (id == R.id.saveItem) {
             onSaveButtonClicked();
-            Toast.makeText(this, "Assessment Saved", Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);

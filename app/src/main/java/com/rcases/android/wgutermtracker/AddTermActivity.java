@@ -170,7 +170,8 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
             startDate = dateFormat.parse(start);
             endDate = dateFormat.parse(end);
         } catch (ParseException e) {
-            e.printStackTrace();
+            Toast.makeText(this, "Please enter valid dates", Toast.LENGTH_LONG).show();
+            return;
         }
 
         final Term term = new Term(title, startDate, endDate);
@@ -187,7 +188,7 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
             }
         });
-
+        Toast.makeText(this, "Term Saved", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -206,7 +207,6 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
 
         if (id == R.id.saveItem) {
             onSaveButtonClicked();
-            Toast.makeText(this, "Term Saved", Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);

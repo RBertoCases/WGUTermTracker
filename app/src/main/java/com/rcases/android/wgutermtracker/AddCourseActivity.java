@@ -231,7 +231,8 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
             startDate = dateFormat.parse(start);
             endDate = dateFormat.parse(end);
         } catch (ParseException e) {
-            e.printStackTrace();
+            Toast.makeText(this, "Please enter valid dates", Toast.LENGTH_LONG).show();
+            return;
         }
 
         final Course course = new Course(title, startDate, endDate, status, note, name, phone, email, mTermId);
@@ -247,8 +248,9 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
                 saveCourseAlerts();
                 finish();
             }
-        });
 
+        });
+        Toast.makeText(this, "Course Saved", Toast.LENGTH_LONG).show();
     }
 
     private void saveCourseAlerts() {
@@ -328,7 +330,6 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
 
         if (id == R.id.saveItem) {
             onSaveButtonClicked();
-            Toast.makeText(this, "Course Saved", Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);

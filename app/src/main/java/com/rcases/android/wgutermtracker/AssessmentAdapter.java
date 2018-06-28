@@ -84,7 +84,6 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
         Assessment assessment = mAssessments.get(position);
         String title = assessment.getTitle();
         String type = getTypeText(assessment.getAssessmentType());
-        //TODO BREAKS APP IF SAVED WITHOUT DATE
         String goalDate = dateFormat.format(assessment.getGoalDate());
 
         //Set values

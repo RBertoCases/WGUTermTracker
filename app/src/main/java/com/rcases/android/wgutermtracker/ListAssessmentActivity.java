@@ -14,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -111,28 +110,24 @@ public class ListAssessmentActivity extends AppCompatActivity implements Assessm
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mDb = AppDatabase.getsInstance(getApplicationContext());
                                 retrieveAssessments();
                             }
                         })
                         .show();
-
             }
         }).attachToRecyclerView(mRecyclerView);
 
-        mDb = AppDatabase.getsInstance(getApplicationContext());
         retrieveAssessments();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         retrieveAssessments();
-
     }
 
     private void retrieveAssessments() {
+        mDb = AppDatabase.getsInstance(getApplicationContext());
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_COURSE_ID)) {
             if (mCourseId == DEFAULT_COURSE_ID) {

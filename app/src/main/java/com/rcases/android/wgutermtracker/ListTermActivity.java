@@ -69,11 +69,6 @@ public class ListTermActivity extends AppCompatActivity implements TermAdapter.I
 
         mDb = AppDatabase.getsInstance(getApplicationContext());
         retrieveTerms();
-        Log.d(TAG, "retrieveTerms()");
-
-
-
-
 
         /*
          Add a touch helper to the RecyclerView to recognize when a user swipes to delete an item.
@@ -101,7 +96,7 @@ public class ListTermActivity extends AppCompatActivity implements TermAdapter.I
                                         "Delete associated courses before deleting term.")
                                 .show();
                         Log.d(TAG, "Cancelling term deletion");
-                        //mDb = AppDatabase.getsInstance(getApplicationContext());
+
                         retrieveTerms();
                         Log.d(TAG, "retrieveTerms()");
                     } else {
@@ -117,9 +112,7 @@ public class ListTermActivity extends AppCompatActivity implements TermAdapter.I
                                                     @Override
                                                     public void run() {
                                                         int position = viewHolder.getAdapterPosition();
-                                                        Log.d(TAG, "Postition = " + position);
                                                         List<Term> terms = mAdapter.getTerms();
-                                                        Log.d(TAG, "terms.get(postion) = " + terms.get(position).getId());
                                                         mDb.termDao().deleteTerm(terms.get(position));
 
                                                     }
@@ -132,7 +125,6 @@ public class ListTermActivity extends AppCompatActivity implements TermAdapter.I
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 Log.d(TAG, "Cancelling term deletion");
-                                                mDb = AppDatabase.getsInstance(getApplicationContext());
                                                 retrieveTerms();
                                                 Log.d(TAG, "retrieveTerms()");
                                             }
@@ -158,12 +150,11 @@ public class ListTermActivity extends AppCompatActivity implements TermAdapter.I
     }
 
     private void retrieveTerms() {
-        Log.d(TAG, "Actively retrieving terms from the Database");
+        mDb = AppDatabase.getsInstance(getApplicationContext());
         final LiveData<List<Term>> terms = mDb.termDao().loadAllTerms();
         terms.observe(this, new Observer<List<Term>>() {
             @Override
             public void onChanged(@Nullable List<Term> termItems) {
-                Log.d(TAG, "Receiving database update from LiveData");
                 mAdapter.setTerms(termItems);
             }
         });

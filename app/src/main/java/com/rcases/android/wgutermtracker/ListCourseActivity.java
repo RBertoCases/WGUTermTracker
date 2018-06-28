@@ -111,8 +111,6 @@ public class ListCourseActivity extends AppCompatActivity implements CourseAdapt
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //TODO move to mDb = AppDatabase.getsInstance(getApplicationContext()); to retrieveCourses() method?
-                                mDb = AppDatabase.getsInstance(getApplicationContext());
                                 retrieveCourses();
                             }
                         })
@@ -120,21 +118,18 @@ public class ListCourseActivity extends AppCompatActivity implements CourseAdapt
 
             }
         }).attachToRecyclerView(mRecyclerView);
-        //TODO move to mDb = AppDatabase.getsInstance(getApplicationContext()); to retrieveCourses() method?
-        mDb = AppDatabase.getsInstance(getApplicationContext());
-        retrieveCourses();
+
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         retrieveCourses();
-
     }
 
     private void retrieveCourses() {
+        mDb = AppDatabase.getsInstance(getApplicationContext());
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_TERM_ID)) {
             if (mTermId == DEFAULT_TERM_ID) {

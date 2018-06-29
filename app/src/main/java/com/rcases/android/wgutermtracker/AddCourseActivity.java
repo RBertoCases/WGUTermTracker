@@ -5,13 +5,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +19,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rcases.android.wgutermtracker.database.AppDatabase;
@@ -33,6 +35,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import static com.rcases.android.wgutermtracker.AddTermActivity.EXTRA_TERM_ID;
+import static com.rcases.android.wgutermtracker.R.color.colorPrimary;
 
 public class AddCourseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,6 +56,7 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
     private AppDatabase mDb;
     private int mCourseId = DEFAULT_COURSE_ID;
     private int mTermId = DEFAULT_TERM_ID;
+    private TextView mAssessmentList;
 
     private void initViews() {
         mTitle = findViewById(R.id.editTextCourseTitle);
@@ -67,7 +71,8 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
         mName = findViewById(R.id.editCourseMentor);
         mPhone = findViewById(R.id.editTextPhone);
         mEmail = findViewById(R.id.editTextEmail);
-        mAssessmentsButton = findViewById(R.id.buttonAssessments);
+        mAssessmentList = findViewById(R.id.tvCourseAssessmentList);
+        //mAssessmentsButton = findViewById(R.id.buttonAssessments);
     }
 
     @Override
@@ -91,7 +96,7 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
 
         mStartDateButton.setOnClickListener(this);
         mEndDateButton.setOnClickListener(this);
-        mAssessmentsButton.setOnClickListener(this);
+        //mAssessmentsButton.setOnClickListener(this);
         mStartAlert.setOnClickListener(this);
         mEndAlert.setOnClickListener(this);
 
@@ -124,7 +129,33 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
             }
         }
 
+        if (mCourseId != DEFAULT_COURSE_ID) {
+            assessmentsButton();
+            mAssessmentList.setText("Course List");
+        } else {
+            mAssessmentList.setText("Once you save the course, the ASSESSMENTS button " +
+                    "will appear here to allow you to create associated assessments");
+        }
 
+
+    }
+
+    private void assessmentsButton() {
+        Button button = new Button(this);
+
+        button.setText("ASSESSMENTS");
+        button.setBackgroundColor(getResources().getColor(colorPrimary));
+        button.setTextColor(Color.WHITE);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutCourse);
+        linearLayout.addView(button); // this call instantiates the button on screen.
+
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(AddCourseActivity.this, ListAssessmentActivity.class);
+                intent.putExtra(EXTRA_COURSE_ID, mCourseId);
+                startActivity(intent);
+            }
+        });
     }
 
     private void shareNote(String noteToShare) {
@@ -204,7 +235,7 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
 
         if (v == mAssessmentsButton) {
             if (mCourseId == DEFAULT_COURSE_ID) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Please save the Course before adding Assessments.", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Please save Course before adding Assessments.", Toast.LENGTH_LONG);
                 toast.show();
             } else {
                 Intent intent = new Intent(AddCourseActivity.this, ListAssessmentActivity.class);

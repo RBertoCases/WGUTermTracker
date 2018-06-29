@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/linearLayoutTerm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
@@ -95,7 +96,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvTermCourseList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Course List" />
@@ -106,7 +107,8 @@
             android:layout_height="wrap_content"
             android:background="@color/wguBlue"
             android:text="Courses"
-            android:textColor="@android:color/primary_text_dark" />
+            android:textColor="@android:color/primary_text_dark"
+            android:visibility="gone" />
 
     </LinearLayout>
 

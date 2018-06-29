@@ -4,11 +4,11 @@ import android.app.DatePickerDialog;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rcases.android.wgutermtracker.database.AppDatabase;
@@ -27,6 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import static com.rcases.android.wgutermtracker.R.color.colorPrimary;
 
 public class AddTermActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,6 +50,7 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
     private Button mCourseButton;
     private AppDatabase mDb;
     private int mTermId = DEFAULT_TERM_ID;
+    private TextView mCourseList;
 
     private void initViews() {
         mTitle = findViewById(R.id.termTitleField);
@@ -53,7 +58,8 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
         mEndDate = findViewById(R.id.termEndField);
         mStartDateButton = findViewById(R.id.startDateButton);
         mEndDateButton = findViewById(R.id.endDateButton);
-        mCourseButton = findViewById(R.id.buttonCoursesForTerm);
+        mCourseList = findViewById(R.id.tvTermCourseList);
+        //mCourseButton = findViewById(R.id.buttonCoursesForTerm);
     }
 
     @Override
@@ -69,7 +75,7 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
 
         mStartDateButton.setOnClickListener(this);
         mEndDateButton.setOnClickListener(this);
-        mCourseButton.setOnClickListener(this);
+        //mCourseButton.setOnClickListener(this);
 
         mDb = AppDatabase.getsInstance(getApplicationContext());
 
@@ -91,6 +97,33 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
                 });
             }
         }
+
+        if (mTermId != DEFAULT_TERM_ID) {
+            coursesButton();
+            mCourseList.setText("Course List");
+        } else {
+            mCourseList.setText("Once you save the term, the COURSES button " +
+                    "will appear here to allow you to create asssociated courses");
+        }
+    }
+
+
+    private void coursesButton() {
+        Button button = new Button(this);
+
+        button.setText("COURSES");
+        button.setBackgroundColor(getResources().getColor(colorPrimary));
+        button.setTextColor(Color.WHITE);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayoutTerm);
+        linearLayout.addView(button); // this call instantiates the button on screen.
+
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(AddTermActivity.this, ListCourseActivity.class);
+                intent.putExtra(EXTRA_TERM_ID, mTermId);
+                startActivity(intent);
+            }
+        });
     }
 
     private void populateUI(Term term) {
@@ -152,9 +185,9 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
                 Toast toast = Toast.makeText(getApplicationContext(), "Please save the Term before adding Courses.", Toast.LENGTH_SHORT);
                 toast.show();
             } else {
-            Intent intent = new Intent(AddTermActivity.this, ListCourseActivity.class);
-            intent.putExtra(EXTRA_TERM_ID, mTermId);
-            startActivity(intent);
+                Intent intent = new Intent(AddTermActivity.this, ListCourseActivity.class);
+                intent.putExtra(EXTRA_TERM_ID, mTermId);
+                startActivity(intent);
             }
         }
 

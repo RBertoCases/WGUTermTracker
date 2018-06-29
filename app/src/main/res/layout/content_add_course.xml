@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/LinearLayoutCourse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
@@ -192,19 +193,20 @@
             android:hint="JaneDoe@abc.com"
             android:inputType="textEmailAddress" />
 
-        <TextView
-            android:id="@+id/textViewAssessmentList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Assessments" />
-
         <Button
             android:id="@+id/buttonAssessments"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="23dp"
             android:background="@color/wguBlue"
             android:text="Assessments"
-            android:textColor="@android:color/primary_text_dark" />
+            android:textColor="@android:color/primary_text_dark"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/tvCourseAssessmentList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Assessment List" />
 
     </LinearLayout>
 

@@ -23,12 +23,9 @@ import android.widget.Toast;
 import com.rcases.android.wgutermtracker.database.AppDatabase;
 import com.rcases.android.wgutermtracker.database.Term;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import static com.rcases.android.wgutermtracker.R.color.colorPrimary;
 
@@ -41,7 +38,7 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
     //
     private static final int DEFAULT_TERM_ID = -1;
     private static final String TAG = AddTermActivity.class.getSimpleName();
-    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+
     private EditText mTitle;
     private EditText mStartDate;
     private EditText mEndDate;
@@ -131,8 +128,8 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
 
-        String start = dateFormat.format(term.getStartDate());
-        String end = dateFormat.format(term.getEndDate());
+        String start = DateUtil.dateFormat.format(term.getStartDate());
+        String end = DateUtil.dateFormat.format(term.getEndDate());
 
         mTitle.setText(term.getTitle());
         mStartDate.setText(start);
@@ -200,8 +197,8 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
         Date startDate = null;
         Date endDate = null;
         try {
-            startDate = dateFormat.parse(start);
-            endDate = dateFormat.parse(end);
+            startDate = DateUtil.dateFormat.parse(start);
+            endDate = DateUtil.dateFormat.parse(end);
         } catch (ParseException e) {
             Toast.makeText(this, "Please enter valid dates", Toast.LENGTH_LONG).show();
             return;

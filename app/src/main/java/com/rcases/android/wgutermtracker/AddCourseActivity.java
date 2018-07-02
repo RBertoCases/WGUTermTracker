@@ -27,12 +27,9 @@ import android.widget.Toast;
 import com.rcases.android.wgutermtracker.database.AppDatabase;
 import com.rcases.android.wgutermtracker.database.Course;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import static com.rcases.android.wgutermtracker.AddTermActivity.EXTRA_TERM_ID;
 import static com.rcases.android.wgutermtracker.R.color.colorPrimary;
@@ -47,7 +44,7 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
     private static final int DEFAULT_COURSE_ID = -1;
     private static final String TAG = AddCourseActivity.class.getSimpleName();
     private static final int DEFAULT_TERM_ID = -1;
-    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+
     private EditText mTitle, mStartDate, mEndDate, mStatus, mNote, mName, mPhone, mEmail;
     private Switch mStartAlert, mEndAlert;
     private int mYear, mMonth, mDay;
@@ -131,10 +128,11 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
 
         if (mCourseId != DEFAULT_COURSE_ID) {
             assessmentsButton();
-            mAssessmentList.setText("Course List");
+            mAssessmentList.setText("Assessments List");
         } else {
-            mAssessmentList.setText("Once you save the course, the ASSESSMENTS button " +
-                    "will appear here to allow you to create associated assessments");
+            mAssessmentList.setText("The ASSESSMENTS button will appear\n" +
+                    "here after saving this assessment to\n" +
+                    "allow you to create associated assessments");
         }
 
 
@@ -172,8 +170,8 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
             return;
         }
 
-        String start = dateFormat.format(course.getStartDate());
-        String end = dateFormat.format(course.getEndDate());
+        String start = DateUtil.dateFormat.format(course.getStartDate());
+        String end = DateUtil.dateFormat.format(course.getEndDate());
 
         mTitle.setText(course.getTitle());
         mStartDate.setText(start);
@@ -259,8 +257,8 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
         String email = mEmail.getText().toString();
 
         try {
-            startDate = dateFormat.parse(start);
-            endDate = dateFormat.parse(end);
+            startDate = DateUtil.dateFormat.parse(start);
+            endDate = DateUtil.dateFormat.parse(end);
         } catch (ParseException e) {
             Toast.makeText(this, "Please enter valid dates", Toast.LENGTH_LONG).show();
             return;

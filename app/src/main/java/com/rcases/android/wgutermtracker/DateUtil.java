@@ -9,7 +9,6 @@ import java.util.TimeZone;
 public class DateUtil {
 
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
-    public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd h:mm a z", Locale.getDefault());
 
     public static long getDateTimestamp(String dateInput) {
         try {

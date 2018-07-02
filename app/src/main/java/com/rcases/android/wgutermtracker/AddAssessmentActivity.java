@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +23,9 @@ import android.widget.Toast;
 import com.rcases.android.wgutermtracker.database.AppDatabase;
 import com.rcases.android.wgutermtracker.database.Assessment;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import static com.rcases.android.wgutermtracker.AddCourseActivity.EXTRA_COURSE_ID;
 
@@ -42,11 +38,12 @@ public class AddAssessmentActivity extends AppCompatActivity implements View.OnC
     public static final String EXTRA_ASSESSMENT_ID = "extraAssessmentId";
     // Extra for the assessment ID to be received after rotation
     public static final String INSTANCE_ASSESSMENT_ID = "instanceAssessmentId";
-    //
+
     private static final int DEFAULT_ASSESSMENT_ID = -1;
     private static final String TAG = AddAssessmentActivity.class.getSimpleName();
     private static final int DEFAULT_COURSE_ID = -1;
-    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+
+
     private EditText mTitle, mGoalDate;
     private Switch mGoalAlert;
     private int mYear, mMonth, mDay;
@@ -119,7 +116,7 @@ public class AddAssessmentActivity extends AppCompatActivity implements View.OnC
             return;
         }
 
-        String goal = dateFormat.format(assessment.getGoalDate());
+        String goal = DateUtil.dateFormat.format(assessment.getGoalDate());
 
         mTitle.setText(assessment.getTitle());
         setTypeInViews(assessment.getAssessmentType());
@@ -161,8 +158,9 @@ public class AddAssessmentActivity extends AppCompatActivity implements View.OnC
         String goal = mGoalDate.getText().toString();
         Date goalDate = null;
 
+        //Stops save action if there is a ParseException
         try {
-            goalDate = dateFormat.parse(goal);
+            goalDate = DateUtil.dateFormat.parse(goal);
         } catch (ParseException e) {
             e.printStackTrace();
             Toast.makeText(this, "Please enter a valid date", Toast.LENGTH_LONG).show();
@@ -209,8 +207,8 @@ public class AddAssessmentActivity extends AppCompatActivity implements View.OnC
         String goal = mGoalDate.getText().toString();
 
         if (now <= DateUtil.getDateTimestamp(goal)) {
-            AlertReceiver.scheduleAssessmentAlarm(getApplicationContext(),
-                    mAssessmentId, DateUtil.getDateTimestamp(goal), title, body);
+            AlertReceiver.scheduleAssessmentAlarm(getApplicationContext(), mAssessmentId,
+                    DateUtil.getDateTimestamp(goal), title, body);
         }
         if (now <= DateUtil.getDateTimestamp(goal) - 3 * 24 * 60 * 60 * 1000) {
             AlertReceiver.scheduleAssessmentAlarm(getApplicationContext(), mAssessmentId,

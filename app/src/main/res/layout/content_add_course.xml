@@ -193,15 +193,6 @@
             android:hint="JaneDoe@abc.com"
             android:inputType="textEmailAddress" />
 
-        <Button
-            android:id="@+id/buttonAssessments"
-            android:layout_width="match_parent"
-            android:layout_height="23dp"
-            android:background="@color/wguBlue"
-            android:text="Assessments"
-            android:textColor="@android:color/primary_text_dark"
-            android:visibility="invisible" />
-
         <TextView
             android:id="@+id/tvCourseAssessmentList"
             android:layout_width="match_parent"

@@ -20,13 +20,7 @@ import com.rcases.android.wgutermtracker.database.Course;
 
 public class AlertReceiver extends BroadcastReceiver {
 
-    public static final String courseAlarmFile = "courseAlarms";
-    public static final String assessmentAlarmFile = "assessmentAlarms";
-    public static final String alarmFile = "alarmFile";
-    public static final String nextAlarmField = "nextAlarmId";
     public static final String ALERT_CHANNEL = "alert";
-
-    private static final String TAG = AlertReceiver.class.getSimpleName();
 
     private AppDatabase mDb;
 
@@ -38,7 +32,7 @@ public class AlertReceiver extends BroadcastReceiver {
         intentAlarm.putExtra("title", title);
         intentAlarm.putExtra("text", text);
         intentAlarm.putExtra("destination", "courseStart");
-        intentAlarm.putExtra("nextAlarmId", startId);
+        intentAlarm.putExtra("alarmId", startId);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent
                 .getBroadcast(context, startId, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
     }
@@ -51,7 +45,7 @@ public class AlertReceiver extends BroadcastReceiver {
         intentAlarm.putExtra("title", title);
         intentAlarm.putExtra("text", text);
         intentAlarm.putExtra("destination", "courseEnd");
-        intentAlarm.putExtra("nextAlarmId", endId);
+        intentAlarm.putExtra("alarmId", endId);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent
                 .getBroadcast(context, endId, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
     }
@@ -64,7 +58,7 @@ public class AlertReceiver extends BroadcastReceiver {
         intentAlarm.putExtra("title", title);
         intentAlarm.putExtra("text", body);
         intentAlarm.putExtra("destination", "assessment");
-        intentAlarm.putExtra("nextAlarmId", assessmentAlarmId);
+        intentAlarm.putExtra("alarmId", assessmentAlarmId);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent
                 .getBroadcast(context, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
 
@@ -98,7 +92,7 @@ public class AlertReceiver extends BroadcastReceiver {
         int id = intent.getIntExtra("id", 0);
         String alarmTitle = intent.getStringExtra("title");
         String alarmText = intent.getStringExtra("text");
-        int nextAlarmId = intent.getIntExtra("nextAlarmId", 0);
+        int alarmId = intent.getIntExtra("alarmId", 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ALERT_CHANNEL)
                 .setSmallIcon(R.drawable.ic_notification)
@@ -150,7 +144,7 @@ public class AlertReceiver extends BroadcastReceiver {
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultPendingIntent).setAutoCancel(true);
-        notificationManager.notify(nextAlarmId, builder.build());
+        notificationManager.notify(alarmId, builder.build());
     }
 
 }

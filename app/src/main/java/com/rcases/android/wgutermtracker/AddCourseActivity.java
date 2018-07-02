@@ -42,7 +42,6 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
     public static final String INSTANCE_COURSE_ID = "instanceCourseId";
     //
     private static final int DEFAULT_COURSE_ID = -1;
-    private static final String TAG = AddCourseActivity.class.getSimpleName();
     private static final int DEFAULT_TERM_ID = -1;
 
     private EditText mTitle, mStartDate, mEndDate, mStatus, mNote, mName, mPhone, mEmail;
@@ -144,7 +143,7 @@ public class AddCourseActivity extends AppCompatActivity implements View.OnClick
         button.setText("ASSESSMENTS");
         button.setBackgroundColor(getResources().getColor(colorPrimary));
         button.setTextColor(Color.WHITE);
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutCourse);
+        LinearLayout linearLayout = findViewById(R.id.LinearLayoutCourse);
         linearLayout.addView(button); // this call instantiates the button on screen.
 
         button.setOnClickListener(new View.OnClickListener() {

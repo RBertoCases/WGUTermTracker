@@ -36,8 +36,6 @@ import java.util.Locale;
  */
 public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.AssessmentViewHolder> {
 
-    private static final String TAG = AssessmentAdapter.class.getSimpleName();
-
     // Member variable to handle item clicks
     final private ItemClickListener mItemClickListener;
     // Date formatter

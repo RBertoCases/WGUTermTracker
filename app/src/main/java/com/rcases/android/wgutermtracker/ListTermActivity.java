@@ -14,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +28,6 @@ import static com.rcases.android.wgutermtracker.AddTermActivity.EXTRA_TERM_ID;
 
 public class ListTermActivity extends AppCompatActivity implements TermAdapter.ItemClickListener {
 
-    private static final String TAG = ListTermActivity.class.getSimpleName();
     private TermAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private AppDatabase mDb;
@@ -88,6 +86,7 @@ public class ListTermActivity extends AppCompatActivity implements TermAdapter.I
                     int position = viewHolder.getAdapterPosition();
                     List<Term> terms = mAdapter.getTerms();
                     mTermId = terms.get(position).getId();
+                    // Checks for any courses with the termId of the term being swiped
                     if (mDb.courseDao().findAnyCoursesForTerm(mTermId)) {
                         new AlertDialog.Builder(ListTermActivity.this)
                                 .setTitle("Unable to Delete")
@@ -95,10 +94,10 @@ public class ListTermActivity extends AppCompatActivity implements TermAdapter.I
                                 .setMessage("Term has associated courses. \n " +
                                         "Delete associated courses before deleting term.")
                                 .show();
-                        Log.d(TAG, "Cancelling term deletion");
+
 
                         retrieveTerms();
-                        Log.d(TAG, "retrieveTerms()");
+
                     } else {
                         new AlertDialog.Builder(ListTermActivity.this)
                                 .setTitle("CONFIRM")
@@ -117,16 +116,13 @@ public class ListTermActivity extends AppCompatActivity implements TermAdapter.I
 
                                                     }
                                                 });
-                                                Log.d(TAG, "Deleted Term");
                                             }
                                         })
                                 .setNegativeButton("Cancel",
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                Log.d(TAG, "Cancelling term deletion");
                                                 retrieveTerms();
-                                                Log.d(TAG, "retrieveTerms()");
                                             }
                                         })
                                 .show();
@@ -188,7 +184,6 @@ public class ListTermActivity extends AppCompatActivity implements TermAdapter.I
         // Launch AddTaskActivity adding the itemId as an extra in the intent
         Intent intent = new Intent(ListTermActivity.this, AddTermActivity.class);
         intent.putExtra(EXTRA_TERM_ID, itemId);
-        Log.d(TAG, "Outgoing EXTRA TERM ID = " + itemId);
         startActivity(intent);
     }
 

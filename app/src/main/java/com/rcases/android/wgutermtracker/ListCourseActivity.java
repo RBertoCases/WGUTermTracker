@@ -29,7 +29,6 @@ import static com.rcases.android.wgutermtracker.MainActivity.EXTRA_MAIN;
 
 public class ListCourseActivity extends AppCompatActivity implements CourseAdapter.ItemClickListener {
 
-    private static final String TAG = ListCourseActivity.class.getSimpleName();
     private static final int DEFAULT_TERM_ID = -1;
     private CourseAdapter mAdapter;
     private RecyclerView mRecyclerView;

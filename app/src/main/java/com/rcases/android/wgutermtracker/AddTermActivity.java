@@ -37,7 +37,6 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
     public static final String INSTANCE_TERM_ID = "instanceTermId";
     //
     private static final int DEFAULT_TERM_ID = -1;
-    private static final String TAG = AddTermActivity.class.getSimpleName();
 
     private EditText mTitle;
     private EditText mStartDate;
@@ -111,7 +110,7 @@ public class AddTermActivity extends AppCompatActivity implements View.OnClickLi
         button.setText("COURSES");
         button.setBackgroundColor(getResources().getColor(colorPrimary));
         button.setTextColor(Color.WHITE);
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayoutTerm);
+        LinearLayout linearLayout = findViewById(R.id.linearLayoutTerm);
         linearLayout.addView(button); // this call instantiates the button on screen.
 
         button.setOnClickListener(new View.OnClickListener() {

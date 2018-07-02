@@ -40,7 +40,7 @@ public class AddAssessmentActivity extends AppCompatActivity implements View.OnC
     public static final String INSTANCE_ASSESSMENT_ID = "instanceAssessmentId";
 
     private static final int DEFAULT_ASSESSMENT_ID = -1;
-    private static final String TAG = AddAssessmentActivity.class.getSimpleName();
+
     private static final int DEFAULT_COURSE_ID = -1;
 
 
